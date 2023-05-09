@@ -2,6 +2,7 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
+const port = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -89,6 +90,6 @@ app.delete("/todos", function (req, res) {
     
 });
 
-app.listen(8000, function () {
-    console.log("listening on port 8000");
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
