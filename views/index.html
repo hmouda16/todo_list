@@ -128,13 +128,31 @@
         }
         // suppression des todos dont done est à true
         function deleteDoneTodos() {
-            fetch("/todo/" + id, {
-                method: "DELETE"
+            // Récupérer toutes les checkboxes cochées
+            const checkedTodos = document.querySelectorAll('input[type="checkbox"].todo-checkbox:checked');
+
+            // Récupérer les IDs des todos cochées
+            const ids = [];
+            checkedTodos.forEach(function (checkbox) {
+                ids.push(checkbox.getAttribute('data-id'));
+            });
+            fetch("/todos/", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ids: ids
+                })
             })
+                .then(function () {
+                    document.getElementById("todoRows").innerHTML = "";
+                    loadTodos();
+                });
         }
 
         // appelé au chargement de la page
-        loadTodos();
+        // loadTodos();
     </script>
 
 </body>

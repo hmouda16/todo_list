@@ -84,8 +84,14 @@ app.put("/todo/:id", function (req, res) {
 // supprime toutes les todos dont le champ done est à true
 app.delete("/todos", function (req, res) {
 
-    todos =[];
-    saveTodos();
+  // Supprimer toutes les todos dont done est true
+  todos = todos.filter(function (todo) {
+    return !todo.done;
+});
+// Sauvegarder les todos restantes dans le fichier todos.json
+saveTodos();
+// Envoyer une réponse HTTP 204 No Content
+res.status(204).send();
     
     
 });
